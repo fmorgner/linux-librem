@@ -3,7 +3,7 @@
 
 pkgbase=linux-librem
 _srcname=linux-4.11
-pkgver=4.11.7
+pkgver=4.11.9
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -17,7 +17,7 @@ source=(https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.{xz,sign}
         enable-byd-touchpad-detection.patch)
 sha256sums=('b67ecafd0a42b3383bf4d82f0850cbff92a7e72a215a6d02f42ddbafcf42a7d6'
             'SKIP'
-            '7d767998aa6a69df36f76d6343c03a45f190c7e8ddf9322c02493ceaa96a1aba'
+            'a112d1330817bac401dbbd1e2c8aacb1b725bc28239e2ca58281ea3754deceb5'
             'SKIP'
             '80c0dc55f96d6f5f7803787f839b947361a8ee80a3bab2e5a49076d97ff4c390'
             '2cb38195bf649dde54e463039def09c13e8c997d9385eddf96364ad22a2e23c0'
@@ -49,8 +49,8 @@ prepare() {
   make silentoldconfig
   make prepare
 
-  make menuconfig
-  #yes "" | make config >/dev/null
+  #make menuconfig
+  yes "" | make config >/dev/null
 }
 
 build() {
