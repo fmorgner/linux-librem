@@ -2,9 +2,9 @@
 # Based on the linux-lts PKGBUILD in core
 
 pkgbase=linux-librem
-_srcname=linux-4.11
-pkgver=4.11.9
-pkgrel=2
+_srcname=linux-4.12
+pkgver=4.12.4
+pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
 license=('GPL2')
@@ -15,11 +15,11 @@ source=(https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.{xz,sign}
         ${pkgbase}.{config,preset,install}
         90-${pkgbase}.hook
         enable-byd-touchpad-detection.patch)
-sha256sums=('b67ecafd0a42b3383bf4d82f0850cbff92a7e72a215a6d02f42ddbafcf42a7d6'
+sha256sums=('a45c3becd4d08ce411c14628a949d08e2433d8cdeca92036c7013980e93858ab'
             'SKIP'
-            'a112d1330817bac401dbbd1e2c8aacb1b725bc28239e2ca58281ea3754deceb5'
+            '7cabddeaba0f9bd85278254ddd6e8af883539df70ec0ed1bda18ce83f57b304a'
             'SKIP'
-            'f448fff07dbcd72e16e2c3265b30ef6334d4bb173fa066fab299919d48739936'
+            'ec5c01aca3f17a56d12f4e7c3eb07ad35461ca686ff6e10116af08870abab454'
             '2cb38195bf649dde54e463039def09c13e8c997d9385eddf96364ad22a2e23c0'
             'dbb0233e451ae1f1c998fca02747028b051864473a54660073e15e946c5f08e9'
             '834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0'
@@ -49,8 +49,11 @@ prepare() {
   make silentoldconfig
   make prepare
 
-  #make menuconfig
-  yes "" | make config >/dev/null
+  if [ "${MCONF}" != "" ]; then
+    make menuconfig
+  else
+    yes "" | make config >/dev/null
+  fi
 }
 
 build() {
