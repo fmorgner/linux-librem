@@ -1,14 +1,14 @@
 # mkinitcpio preset file for the 'linux-lts' package
 
 ALL_config="/etc/mkinitcpio.conf"
-ALL_kver="/boot/vmlinuz-linux-lts-librem"
+ALL_kver="/boot/vmlinuz-linux-librem"
 
 PRESETS=('default' 'fallback')
 
 #default_config="/etc/mkinitcpio.conf"
-default_image="/boot/initramfs-linux-lts-librem.img"
+default_image="/boot/initramfs-linux-librem.img"
 #default_options=""
 
 #fallback_config="/etc/mkinitcpio.conf"
-fallback_image="/boot/initramfs-linux-lts-librem-fallback.img"
+fallback_image="/boot/initramfs-linux-librem-fallback.img"
 fallback_options="-S autodetect"
