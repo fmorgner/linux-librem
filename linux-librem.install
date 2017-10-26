@@ -2,7 +2,7 @@
 # arg 2:  the old package version
 
 KERNEL_NAME=-librem
-KERNEL_VERSION=
+KERNEL_VERSION=$1
 
 post_install () {
   echo ">>> Updating module dependencies. Please wait ..."
