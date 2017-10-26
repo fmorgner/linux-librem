@@ -3,7 +3,7 @@
 
 pkgbase=linux-librem
 _srcname=linux-4.13
-pkgver=4.13.7
+pkgver=4.13.8
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -17,9 +17,9 @@ source=(https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.{xz,sign}
         enable-byd-touchpad-detection.patch)
 sha256sums=('2db3d6066c3ad93eb25b973a3d2951e022a7e975ee2fa7cbe5bddf84d9a49a2c'
             'SKIP'
-            '0fe89c96e956efbded576214eef0c8e43cabe41dfca245e3ebb79fff9bc8715d'
+            '3b2bcceb16acd75322e98d3e93967e82bd0e7499c748bf12bd46c7519dacc315'
             'SKIP'
-            'f284169e7d85f0320d32bd8c705738a45ea91f003ed0fc6490caf8393b5ccc59'
+            '9918b8f38f225c6a39a126125e18355cab0daf1d335d6d47ccf4e3ca816d11c5'
             '027aae2677a2d9b184ee39142997484020bc5774dbb74c4776f20cb417881ce5'
             '33ff5ceebdc10b5623642d770527d0cac437e45e841c65148e3a3d0f68e52cdf'
             '834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0'
@@ -163,7 +163,7 @@ _package-headers() {
   find . -name Kconfig\* -exec install -Dm644 {} "${_builddir}/{}" \;
 
   # add objtool for external module building and enabled VALIDATION_STACK option
-  if [[ -e tools/objtools/objtool ]]; then
+  if [[ -e tools/objtool/objtool ]]; then
     install -Dt "${_builddir}/tools/objtool" tools/objtool/objtool
   fi
 
