@@ -3,7 +3,7 @@
 
 pkgbase=linux-librem
 _srcname=linux-4.13
-pkgver=4.13.8
+pkgver=4.13.10
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -17,9 +17,9 @@ source=(https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.{xz,sign}
         enable-byd-touchpad-detection.patch)
 sha256sums=('2db3d6066c3ad93eb25b973a3d2951e022a7e975ee2fa7cbe5bddf84d9a49a2c'
             'SKIP'
-            '3b2bcceb16acd75322e98d3e93967e82bd0e7499c748bf12bd46c7519dacc315'
+            'b9efa9c6375f79f6a041a5f0666d4ced1a49bfe8c4662d26517a6b4cfd9bf2f6'
             'SKIP'
-            '9918b8f38f225c6a39a126125e18355cab0daf1d335d6d47ccf4e3ca816d11c5'
+            '2ad6033300213468d0fd7dcd6be3c9aa71296f1acf99a37428c7e1a8dd813ae5'
             '027aae2677a2d9b184ee39142997484020bc5774dbb74c4776f20cb417881ce5'
             '33ff5ceebdc10b5623642d770527d0cac437e45e841c65148e3a3d0f68e52cdf'
             '834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0'
