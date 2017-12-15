@@ -388,7 +388,7 @@ diff -aur linux-4.14.old/drivers/input/mouse/byd.c linux-4.14.new/drivers/input/
 -		/* Pairs of parameters and values. */
  		{ BYD_CMD_SET_HANDEDNESS, 0x01 },
 -		{ BYD_CMD_SET_PHYSICAL_BUTTONS, 0x04 },
-+		{ BYD_CMD_SET_PHYSICAL_BUTTONS, 0x00 },
++		{ BYD_CMD_SET_PHYSICAL_BUTTONS, 0x06 },
  		{ BYD_CMD_SET_TAP, 0x02 },
 +		{ BYD_CMD_SET_TAP_DRAG, 0x03 },
  		{ BYD_CMD_SET_ONE_FINGER_SCROLL, 0x04 },
