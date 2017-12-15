@@ -1,6 +1,6 @@
-diff -aur linux-4.14.orig/drivers/input/mouse/byd.c linux-4.14.new/drivers/input/mouse/byd.c
---- linux-4.14.orig/drivers/input/mouse/byd.c	2017-11-12 19:46:13.000000000 +0100
-+++ linux-4.14.new/drivers/input/mouse/byd.c	2017-11-27 22:34:25.418390719 +0100
+diff -aur linux-4.14.old/drivers/input/mouse/byd.c linux-4.14.new/drivers/input/mouse/byd.c
+--- linux-4.14.old/drivers/input/mouse/byd.c	2017-11-12 19:46:13.000000000 +0100
++++ linux-4.14.new/drivers/input/mouse/byd.c	2017-12-12 20:48:27.871600134 +0100
 @@ -50,7 +50,7 @@
  
  /*
@@ -204,7 +204,7 @@ diff -aur linux-4.14.orig/drivers/input/mouse/byd.c linux-4.14.new/drivers/input
  #define BYD_PACKET_PINCH_IN			0xd8
  #define BYD_PACKET_PINCH_OUT			0x28
  #define BYD_PACKET_ROTATE_CLOCKWISE		0x29
-@@ -225,115 +225,65 @@
+@@ -225,115 +225,66 @@
  #define BYD_PACKET_ONTO_PAD_SWIPE_UP		0xd0
  #define BYD_PACKET_ONTO_PAD_SWIPE_LEFT		0xc9
  
@@ -271,8 +271,6 @@ diff -aur linux-4.14.orig/drivers/input/mouse/byd.c linux-4.14.new/drivers/input
  		return PSMOUSE_GOOD_DATA;
  
 -	/* Otherwise, a full packet has been received */
-+	input_report_key(psmouse->dev, BTN_LEFT,	 (pkt[0]		 ) & 1);
-+
  	switch (pkt[3]) {
 -	case BYD_PACKET_ABSOLUTE:
 -		/* Only use absolute packets for the start of movement. */
@@ -300,6 +298,7 @@ diff -aur linux-4.14.orig/drivers/input/mouse/byd.c linux-4.14.new/drivers/input
 -		priv->abs_y -= dy * BYD_DT;
 -
 -		priv->touch = true;
++		input_report_key(dev, BTN_LEFT, pkt[0] & 1);
 +		input_report_rel(dev, REL_X, pkt[1] ? (int) pkt[1] - (int) ((pkt[0] << 4) & 0x100) : 0);
 +		input_report_rel(dev, REL_Y, pkt[2] ? (int) ((pkt[0] << 3) & 0x100) - (int) pkt[2] : 0);
  		break;
@@ -322,22 +321,24 @@ diff -aur linux-4.14.orig/drivers/input/mouse/byd.c linux-4.14.new/drivers/input
 +	}
 +	case BYD_PACKET_RIGHT_CORNER_CLICK: {
 +		input_report_key(dev, BTN_RIGHT, 1);
++		input_sync(dev);
 +		input_report_key(dev, BTN_RIGHT, 0);
 +		break;
 +	}
 +	case BYD_PACKET_LEFT_AND_RIGHT_CORNER_CLICK: {
 +		input_report_key(dev, BTN_MIDDLE, 1);
++		input_sync(dev);
 +		input_report_key(dev, BTN_MIDDLE, 0);
 +		break;
 +	}
-+  case BYD_PACKET_PINCH_IN: {
-+    input_report_rel(dev, REL_Z, -1);
-+    break;
-+  }
-+  case BYD_PACKET_PINCH_OUT: {
-+    input_report_rel(dev, REL_Z, 1);
-+    break;
-+  }
++	case BYD_PACKET_PINCH_IN: {
++		input_report_rel(dev, REL_DIAL, -1);
++		break;
++	}
++	case BYD_PACKET_PINCH_OUT: {
++		input_report_rel(dev, REL_DIAL, 1);
++		break;
++	}
  	default:
  		psmouse_warn(psmouse,
 -			     "Unrecognized Z: pkt = %02x %02x %02x %02x\n",
@@ -363,7 +364,7 @@ diff -aur linux-4.14.orig/drivers/input/mouse/byd.c linux-4.14.new/drivers/input
  
  	return PSMOUSE_FULL_PACKET;
  }
-@@ -348,40 +298,32 @@
+@@ -348,40 +302,32 @@
  		u16 command;
  		u8 arg;
  	} seq[] = {
@@ -387,7 +388,7 @@ diff -aur linux-4.14.orig/drivers/input/mouse/byd.c linux-4.14.new/drivers/input
 -		/* Pairs of parameters and values. */
  		{ BYD_CMD_SET_HANDEDNESS, 0x01 },
 -		{ BYD_CMD_SET_PHYSICAL_BUTTONS, 0x04 },
-+		{ BYD_CMD_SET_PHYSICAL_BUTTONS, 0x06 },
++		{ BYD_CMD_SET_PHYSICAL_BUTTONS, 0x00 },
  		{ BYD_CMD_SET_TAP, 0x02 },
 +		{ BYD_CMD_SET_TAP_DRAG, 0x03 },
  		{ BYD_CMD_SET_ONE_FINGER_SCROLL, 0x04 },
@@ -413,7 +414,7 @@ diff -aur linux-4.14.orig/drivers/input/mouse/byd.c linux-4.14.new/drivers/input
  		{ 0x10E0, 0x00 },
  		{ 0x10E2, 0x01 },
  	};
-@@ -425,13 +367,6 @@
+@@ -425,13 +371,6 @@
  
  static void byd_disconnect(struct psmouse *psmouse)
  {
@@ -427,7 +428,7 @@ diff -aur linux-4.14.orig/drivers/input/mouse/byd.c linux-4.14.new/drivers/input
  }
  
  int byd_detect(struct psmouse *psmouse, bool set_properties)
-@@ -466,7 +401,6 @@
+@@ -466,7 +405,6 @@
  int byd_init(struct psmouse *psmouse)
  {
  	struct input_dev *dev = psmouse->dev;
@@ -435,7 +436,7 @@ diff -aur linux-4.14.orig/drivers/input/mouse/byd.c linux-4.14.new/drivers/input
  
  	if (psmouse_reset(psmouse))
  		return -EIO;
-@@ -474,38 +408,27 @@
+@@ -474,38 +412,27 @@
  	if (byd_reset_touchpad(psmouse))
  		return -EIO;
  
@@ -476,7 +477,7 @@ diff -aur linux-4.14.orig/drivers/input/mouse/byd.c linux-4.14.new/drivers/input
 +	__set_bit(BTN_MIDDLE, dev->keybit);
 +	__set_bit(EV_KEY, dev->evbit);
 +	__set_bit(EV_REL, dev->evbit);
-+	__set_bit(REL_X, dev->relbit);
++	__set_bit(REL_DIAL, dev->relbit);
 +	__set_bit(REL_Y, dev->relbit);
 +	__set_bit(REL_Z, dev->relbit);
 +	__set_bit(REL_RZ, dev->relbit);
@@ -485,9 +486,9 @@ diff -aur linux-4.14.orig/drivers/input/mouse/byd.c linux-4.14.new/drivers/input
  
  	return 0;
  }
-diff -aur linux-4.14.orig/drivers/input/mouse/psmouse-base.c linux-4.14.new/drivers/input/mouse/psmouse-base.c
---- linux-4.14.orig/drivers/input/mouse/psmouse-base.c	2017-11-12 19:46:13.000000000 +0100
-+++ linux-4.14.new/drivers/input/mouse/psmouse-base.c	2017-11-26 23:26:05.848834646 +0100
+diff -aur linux-4.14.old/drivers/input/mouse/psmouse-base.c linux-4.14.new/drivers/input/mouse/psmouse-base.c
+--- linux-4.14.old/drivers/input/mouse/psmouse-base.c	2017-11-12 19:46:13.000000000 +0100
++++ linux-4.14.new/drivers/input/mouse/psmouse-base.c	2017-12-12 20:06:55.885878592 +0100
 @@ -1159,6 +1159,10 @@
  		if (psmouse_try_protocol(psmouse, PSMOUSE_TOUCHKIT_PS2,
  					 &max_proto, set_properties, true))
