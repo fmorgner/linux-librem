@@ -3,7 +3,7 @@
 
 pkgbase=linux-librem
 _srcname=linux-4.14
-pkgver=4.14.10
+pkgver=4.14.12
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -17,9 +17,9 @@ source=(https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.{xz,sign}
         byd-touchpad.patch)
 sha256sums=('f81d59477e90a130857ce18dc02f4fbe5725854911db1e7ba770c7cd350f96a7'
             'SKIP'
-            '16f560aa713b46c707f04a226f67dc31fdd280aae57dd19e0413d61df5336c74'
+            'da5d8db44b0988e4c45346899d3f5a51f8bd6c25f14e729615ca9ff9f17bdefd'
             'SKIP'
-            'b6dd1a9559cf156104e7b4f5d7d018c330f67a20f9b6b892523eac2a8a93957a'
+            'ac0b47561aaba6f231316f06af063c9f4cb1d89e923df68f958636eb5c39d911'
             '027aae2677a2d9b184ee39142997484020bc5774dbb74c4776f20cb417881ce5'
             '33ff5ceebdc10b5623642d770527d0cac437e45e841c65148e3a3d0f68e52cdf'
             '834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0'
@@ -36,6 +36,8 @@ prepare() {
   patch -p1 -i "${srcdir}/patch-${pkgver}"
   patch -p1 -i "${srcdir}/byd-touchpad.patch"
 
+  chmod +x tools/objtool/sync-check.sh
+
   cp "${srcdir}/linux-librem.config" ./.config
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -46,7 +48,6 @@ prepare() {
 
   sed -i '2iexit 0' scripts/depmod.sh
 
-  make silentoldconfig
   make prepare
 
   if [ "${MCONF}" != "" ]; then
