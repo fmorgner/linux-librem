@@ -3,7 +3,7 @@
 
 pkgbase=linux-librem
 _srcname=linux-4.14
-pkgver=4.14.12
+pkgver=4.14.14
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -17,9 +17,9 @@ source=(https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.{xz,sign}
         byd-touchpad.patch)
 sha256sums=('f81d59477e90a130857ce18dc02f4fbe5725854911db1e7ba770c7cd350f96a7'
             'SKIP'
-            'da5d8db44b0988e4c45346899d3f5a51f8bd6c25f14e729615ca9ff9f17bdefd'
+            '62d656b98f0dc143216cb9650bd9b96cd83d92925731e9f0bec5eb4d6358e603'
             'SKIP'
-            'ac0b47561aaba6f231316f06af063c9f4cb1d89e923df68f958636eb5c39d911'
+            '68ccfc76a5665791958297f17ba449ef32ec43df4fc426d396a2de0558099ad7'
             '027aae2677a2d9b184ee39142997484020bc5774dbb74c4776f20cb417881ce5'
             '33ff5ceebdc10b5623642d770527d0cac437e45e841c65148e3a3d0f68e52cdf'
             '834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0'
