@@ -1,6 +1,6 @@
-diff -aur linux-4.14.old/drivers/input/mouse/byd.c linux-4.14.new/drivers/input/mouse/byd.c
---- linux-4.14.old/drivers/input/mouse/byd.c	2017-11-12 19:46:13.000000000 +0100
-+++ linux-4.14.new/drivers/input/mouse/byd.c	2017-12-12 20:48:27.871600134 +0100
+diff -aur linux-4.15/drivers/input/mouse/byd.c linux-4.15-new/drivers/input/mouse/byd.c
+--- linux-4.15/drivers/input/mouse/byd.c	2018-01-28 22:20:33.000000000 +0100
++++ linux-4.15-new/drivers/input/mouse/byd.c	2018-03-05 21:58:26.284637184 +0100
 @@ -50,7 +50,7 @@
  
  /*
@@ -195,21 +195,13 @@ diff -aur linux-4.14.old/drivers/input/mouse/byd.c linux-4.14.new/drivers/input/
   */
  #define BYD_CMD_SET_TWO_FINGER_SCROLL_FUNC	0x10e5
  
-@@ -198,7 +198,7 @@
-  */
- #define BYD_PACKET_ABSOLUTE			0xf8
- #define BYD_PACKET_RELATIVE			0x00
--/* Multitouch gesture packets */
-+
- #define BYD_PACKET_PINCH_IN			0xd8
- #define BYD_PACKET_PINCH_OUT			0x28
- #define BYD_PACKET_ROTATE_CLOCKWISE		0x29
-@@ -225,115 +225,66 @@
+@@ -225,116 +225,66 @@
  #define BYD_PACKET_ONTO_PAD_SWIPE_UP		0xd0
  #define BYD_PACKET_ONTO_PAD_SWIPE_LEFT		0xc9
  
 -struct byd_data {
 -	struct timer_list timer;
+-	struct psmouse *psmouse;
 -	s32 abs_x;
 -	s32 abs_y;
 -	typeof(jiffies) last_touch_time;
@@ -234,10 +226,10 @@ diff -aur linux-4.14.old/drivers/input/mouse/byd.c linux-4.14.new/drivers/input/
 -	input_sync(dev);
 -}
 -
--static void byd_clear_touch(unsigned long data)
+-static void byd_clear_touch(struct timer_list *t)
 -{
--	struct psmouse *psmouse = (struct psmouse *)data;
--	struct byd_data *priv = psmouse->private;
+-	struct byd_data *priv = from_timer(priv, t, timer);
+-	struct psmouse *psmouse = priv->psmouse;
 -
 -	serio_pause_rx(psmouse->ps2dev.serio);
 -	priv->touch = false;
@@ -265,7 +257,7 @@ diff -aur linux-4.14.old/drivers/input/mouse/byd.c linux-4.14.new/drivers/input/
 -			     pkt[0]);
 -		return PSMOUSE_BAD_DATA;
 -	}
-+  struct input_dev * dev = psmouse->dev;
++	struct input_dev * dev = psmouse->dev;
  
  	if (psmouse->pktcnt < psmouse->pktsize)
  		return PSMOUSE_GOOD_DATA;
@@ -301,8 +293,8 @@ diff -aur linux-4.14.old/drivers/input/mouse/byd.c linux-4.14.new/drivers/input/
 +		input_report_key(dev, BTN_LEFT, pkt[0] & 1);
 +		input_report_rel(dev, REL_X, pkt[1] ? (int) pkt[1] - (int) ((pkt[0] << 4) & 0x100) : 0);
 +		input_report_rel(dev, REL_Y, pkt[2] ? (int) ((pkt[0] << 3) & 0x100) - (int) pkt[2] : 0);
- 		break;
- 	}
++		break;
++	}
 +	case BYD_PACKET_TWO_FINGER_SCROLL_UP: {
 +		input_report_rel(dev, REL_WHEEL, 1);
 +		break;
@@ -337,14 +329,14 @@ diff -aur linux-4.14.old/drivers/input/mouse/byd.c linux-4.14.new/drivers/input/
 +	}
 +	case BYD_PACKET_PINCH_OUT: {
 +		input_report_rel(dev, REL_DIAL, 1);
-+		break;
-+	}
+ 		break;
+ 	}
  	default:
  		psmouse_warn(psmouse,
 -			     "Unrecognized Z: pkt = %02x %02x %02x %02x\n",
 -			     psmouse->packet[0], psmouse->packet[1],
 -			     psmouse->packet[2], psmouse->packet[3]);
-+					 "Unrecognized packet = %02x %02x %02x %02x\n",
++					 "Unrecognized Z: pkt = %02x %02x %02x %02x\n",
 +					 psmouse->packet[0], psmouse->packet[1],
 +					 psmouse->packet[2], psmouse->packet[3]);
  		return PSMOUSE_BAD_DATA;
@@ -364,7 +356,7 @@ diff -aur linux-4.14.old/drivers/input/mouse/byd.c linux-4.14.new/drivers/input/
  
  	return PSMOUSE_FULL_PACKET;
  }
-@@ -348,40 +302,32 @@
+@@ -349,40 +299,32 @@
  		u16 command;
  		u8 arg;
  	} seq[] = {
@@ -401,7 +393,7 @@ diff -aur linux-4.14.old/drivers/input/mouse/byd.c linux-4.14.new/drivers/input/
 -		{ BYD_CMD_SET_TWO_FINGER_SCROLL, 0x04 },
 -		{ BYD_CMD_SET_TWO_FINGER_SCROLL_FUNC, 0x04 },
 +		{ BYD_CMD_SET_MULTITOUCH, 0x01 },
-+		{ BYD_CMD_SET_TAP_DRAG_DELAY_TIME, 0x00},
++		{ BYD_CMD_SET_TAP_DRAG_DELAY_TIME, 0x00 },
 +		{ BYD_CMD_SET_TWO_FINGER_SCROLL, 0x03 },
 +		{ BYD_CMD_SET_TWO_FINGER_SCROLL_FUNC, 0x01 },
  		{ BYD_CMD_SET_LEFT_EDGE_REGION, 0x00 },
@@ -414,7 +406,7 @@ diff -aur linux-4.14.old/drivers/input/mouse/byd.c linux-4.14.new/drivers/input/
  		{ 0x10E0, 0x00 },
  		{ 0x10E2, 0x01 },
  	};
-@@ -425,13 +371,6 @@
+@@ -426,13 +368,6 @@
  
  static void byd_disconnect(struct psmouse *psmouse)
  {
@@ -428,15 +420,7 @@ diff -aur linux-4.14.old/drivers/input/mouse/byd.c linux-4.14.new/drivers/input/
  }
  
  int byd_detect(struct psmouse *psmouse, bool set_properties)
-@@ -466,7 +405,6 @@
- int byd_init(struct psmouse *psmouse)
- {
- 	struct input_dev *dev = psmouse->dev;
--	struct byd_data *priv;
- 
- 	if (psmouse_reset(psmouse))
- 		return -EIO;
-@@ -474,38 +412,27 @@
+@@ -475,39 +410,27 @@
  	if (byd_reset_touchpad(psmouse))
  		return -EIO;
  
@@ -444,19 +428,19 @@ diff -aur linux-4.14.old/drivers/input/mouse/byd.c linux-4.14.new/drivers/input/
 -	if (!priv)
 -		return -ENOMEM;
 -
--	setup_timer(&priv->timer, byd_clear_touch, (unsigned long) psmouse);
+-	priv->psmouse = psmouse;
+-	timer_setup(&priv->timer, byd_clear_touch, 0);
 -
 -	psmouse->private = priv;
  	psmouse->disconnect = byd_disconnect;
  	psmouse->reconnect = byd_reconnect;
-+  psmouse->private = NULL;
++	psmouse->private = NULL;
  	psmouse->protocol_handler = byd_process_byte;
  	psmouse->pktsize = 4;
  	psmouse->resync_time = 0;
  
--	__set_bit(INPUT_PROP_POINTER, dev->propbit);
+ 	__set_bit(INPUT_PROP_POINTER, dev->propbit);
 -	/* Touchpad */
-+	__set_bit(INPUT_PROP_BUTTONPAD, dev->propbit);
  	__set_bit(BTN_TOUCH, dev->keybit);
  	__set_bit(BTN_TOOL_FINGER, dev->keybit);
 -	/* Buttons */
@@ -475,28 +459,14 @@ diff -aur linux-4.14.old/drivers/input/mouse/byd.c linux-4.14.new/drivers/input/
 -	__clear_bit(REL_X, dev->relbit);
 -	__clear_bit(REL_Y, dev->relbit);
 +	__set_bit(BTN_MIDDLE, dev->keybit);
-+	__set_bit(EV_KEY, dev->evbit);
++	__set_bit(EV_KEY, dev->keybit);
 +	__set_bit(EV_REL, dev->evbit);
-+	__set_bit(REL_DIAL, dev->relbit);
++	__set_bit(REL_DIAL, dev->evbit);
++	__set_bit(REL_X, dev->relbit);
 +	__set_bit(REL_Y, dev->relbit);
-+	__set_bit(REL_Z, dev->relbit);
 +	__set_bit(REL_RZ, dev->relbit);
 +	__set_bit(REL_WHEEL, dev->relbit);
 +	__set_bit(REL_HWHEEL, dev->relbit);
  
  	return 0;
  }
-diff -aur linux-4.14.old/drivers/input/mouse/psmouse-base.c linux-4.14.new/drivers/input/mouse/psmouse-base.c
---- linux-4.14.old/drivers/input/mouse/psmouse-base.c	2017-11-12 19:46:13.000000000 +0100
-+++ linux-4.14.new/drivers/input/mouse/psmouse-base.c	2017-12-12 20:06:55.885878592 +0100
-@@ -1159,6 +1159,10 @@
- 		if (psmouse_try_protocol(psmouse, PSMOUSE_TOUCHKIT_PS2,
- 					 &max_proto, set_properties, true))
- 			return PSMOUSE_TOUCHKIT_PS2;
-+
-+		if (psmouse_try_protocol(psmouse, PSMOUSE_BYD,
-+					 &max_proto, set_properties, true))
-+			return PSMOUSE_BYD;
- 	}
- 
- 	/*
