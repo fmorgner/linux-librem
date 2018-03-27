@@ -4,7 +4,7 @@
 pkgbase=linux-librem
 _srcname=linux-4.15
 pkgver=4.15.7
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://www.kernel.org/"
 license=('GPL2')
@@ -19,11 +19,11 @@ sha256sums=('5a26478906d5005f4f809402e981518d2b8844949199f60c4b6e1f986ca2a769'
             'SKIP'
             '0dad200b26837acd0340dfe18d9610467c111df5719440248cd8be6fb8d6dd02'
             'SKIP'
-            '6d5faa93b362b319700b6f2ab32687d31ae05e59956c115a152fbf54975b90cf'
+            '1f521f6f589c979c1453d2e1d7e922c9b0c918f5de483753168b33129494f882'
             '027aae2677a2d9b184ee39142997484020bc5774dbb74c4776f20cb417881ce5'
             '33ff5ceebdc10b5623642d770527d0cac437e45e841c65148e3a3d0f68e52cdf'
             '834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0'
-            '08542a90d02ad89ede062967d4beac1cc5f4ef1407b9df2224ed7cfe91284444')
+            '6310a88c7027eeeb69082fde85665d10cceaa4b225795337ad55243a8778ec6b')
 validpgpkeys=('ABAF11C65A2970B130ABE3C479BE3E4300411886'
               '647F28654894E3BD457199BE38DBBDC86092693E'
              )
