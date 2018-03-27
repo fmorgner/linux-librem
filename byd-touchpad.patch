@@ -459,14 +459,28 @@ diff -aur linux-4.15/drivers/input/mouse/byd.c linux-4.15-new/drivers/input/mous
 -	__clear_bit(REL_X, dev->relbit);
 -	__clear_bit(REL_Y, dev->relbit);
 +	__set_bit(BTN_MIDDLE, dev->keybit);
-+	__set_bit(EV_KEY, dev->keybit);
++	__set_bit(EV_KEY, dev->evbit);
 +	__set_bit(EV_REL, dev->evbit);
-+	__set_bit(REL_DIAL, dev->evbit);
-+	__set_bit(REL_X, dev->relbit);
++	__set_bit(REL_DIAL, dev->relbit);
 +	__set_bit(REL_Y, dev->relbit);
++	__set_bit(REL_Z, dev->relbit);
 +	__set_bit(REL_RZ, dev->relbit);
 +	__set_bit(REL_WHEEL, dev->relbit);
 +	__set_bit(REL_HWHEEL, dev->relbit);
  
  	return 0;
  }
+diff -aur linux-4.14.old/drivers/input/mouse/psmouse-base.c linux-4.14.new/drivers/input/mouse/psmouse-base.c
+--- linux-4.14.old/drivers/input/mouse/psmouse-base.c	2017-11-12 19:46:13.000000000 +0100
++++ linux-4.14.new/drivers/input/mouse/psmouse-base.c	2017-12-12 20:06:55.885878592 +0100
+@@ -1159,6 +1159,10 @@
+ 		if (psmouse_try_protocol(psmouse, PSMOUSE_TOUCHKIT_PS2,
+ 					 &max_proto, set_properties, true))
+ 			return PSMOUSE_TOUCHKIT_PS2;
++
++		if (psmouse_try_protocol(psmouse, PSMOUSE_BYD,
++					 &max_proto, set_properties, true))
++			return PSMOUSE_BYD;
+ 	}
+ 
+ 	/*
