@@ -4,7 +4,7 @@
 pkgbase=linux-librem
 _srcname=linux-4.16
 pkgver=4.16.3
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://www.kernel.org/"
 license=('GPL2')
@@ -19,7 +19,7 @@ sha256sums=('63f6dc8e3c9f3a0273d5d6f4dca38a2413ca3a5f689329d05b750e4c87bb21b9'
             'SKIP'
             '336252cb15f2f2574461c1d3daabf5dc207842526085802270e1e5223f645db3'
             'SKIP'
-            '2f50ce98514eede0cb58c6fc311f866aa23b84a78db86f5ff5a17de9f3258a61'
+            'cc674568ee2b76de33ce1807969462bd69247334d6f53984d83e9f005c8f768c'
             '027aae2677a2d9b184ee39142997484020bc5774dbb74c4776f20cb417881ce5'
             '33ff5ceebdc10b5623642d770527d0cac437e45e841c65148e3a3d0f68e52cdf'
             '834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0'

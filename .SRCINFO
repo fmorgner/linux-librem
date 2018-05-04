@@ -1,6 +1,6 @@
 pkgbase = linux-librem
 	pkgver = 4.16.3
-	pkgrel = 1
+	pkgrel = 2
 	url = https://www.kernel.org/
 	arch = x86_64
 	license = GPL2
@@ -25,7 +25,7 @@ pkgbase = linux-librem
 	sha256sums = SKIP
 	sha256sums = 336252cb15f2f2574461c1d3daabf5dc207842526085802270e1e5223f645db3
 	sha256sums = SKIP
-	sha256sums = 2f50ce98514eede0cb58c6fc311f866aa23b84a78db86f5ff5a17de9f3258a61
+	sha256sums = cc674568ee2b76de33ce1807969462bd69247334d6f53984d83e9f005c8f768c
 	sha256sums = 027aae2677a2d9b184ee39142997484020bc5774dbb74c4776f20cb417881ce5
 	sha256sums = 33ff5ceebdc10b5623642d770527d0cac437e45e841c65148e3a3d0f68e52cdf
 	sha256sums = 834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0
