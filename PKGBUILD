@@ -2,8 +2,8 @@
 # Based on the linux-lts PKGBUILD in core
 
 pkgbase=linux-librem
-_srcname=linux-4.16
-pkgver=4.16.13
+_srcname=linux-4.17
+pkgver=4.17
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -15,11 +15,11 @@ source=(https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.{xz,sign}
         ${pkgbase}.{config,preset,install}
         90-${pkgbase}.hook
         byd-touchpad.patch)
-sha256sums=('63f6dc8e3c9f3a0273d5d6f4dca38a2413ca3a5f689329d05b750e4c87bb21b9'
+sha256sums=('9faa1dd896eaea961dc6e886697c0b3301277102e5bc976b2758f9a62d3ccd13'
             'SKIP'
-            '9efa0a74eb61240da53bd01a3a23759e0065811de53d22de7d679eabf847f323'
+            '91e7d0ebe6bdbe66a5b523e0181b34b59e1a1c04c4428fb7f84b512fd84bbb08'
             'SKIP'
-            '27ef1d34399b2d5a345c6b92928679402fb02b0c2e0cac914afd5eba2f79f723'
+            '43e832eed7e2d59d5df268be4da571ae7b016290865f01fe2f9369d6c525b761'
             '027aae2677a2d9b184ee39142997484020bc5774dbb74c4776f20cb417881ce5'
             '33ff5ceebdc10b5623642d770527d0cac437e45e841c65148e3a3d0f68e52cdf'
             '834bd254b56ab71d73f59b3221f056c72f559553c04718e350ab2a3e2991afe0'
@@ -33,7 +33,7 @@ _kernelname=${pkgbase#linux}
 prepare() {
   cd "${srcdir}/${_srcname}"
 
-  patch -p1 -i "${srcdir}/patch-${pkgver}"
+  #patch -p1 -i "${srcdir}/patch-${pkgver}"
   patch -p1 -i "${srcdir}/byd-touchpad.patch"
 
   chmod +x tools/objtool/sync-check.sh
