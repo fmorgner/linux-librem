@@ -4,7 +4,7 @@
 pkgbase=linux-librem
 _srcname=linux-4.17
 pkgver=4.17.11
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://www.kernel.org/"
 license=('GPL2')
@@ -19,7 +19,7 @@ source=(https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.{xz,sign}
 sha256sums=('9faa1dd896eaea961dc6e886697c0b3301277102e5bc976b2758f9a62d3ccd13'
             'SKIP'
             '1345bf04742096c50eff4de6ba2a2c07ba8779e3c46373cd8076475c36f2e7b0'
-            'f35b05d8578ce866b6a7797b1898d267f701161c90013dbc281c3c4f03b73e0b'
+            '74359dd139c48ff3706208eeed3adeb2346f093b5edd5b9987665ef8769aed3e'
             '027aae2677a2d9b184ee39142997484020bc5774dbb74c4776f20cb417881ce5'
             '33ff5ceebdc10b5623642d770527d0cac437e45e841c65148e3a3d0f68e52cdf'
             '5c7af03d9b4cade110543ba706bcbd49fc6447726258b4bfec0edff7ca9994d1'
