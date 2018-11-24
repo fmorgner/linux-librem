@@ -2,8 +2,8 @@
 # Based on the linux-lts PKGBUILD in core
 
 pkgbase=linux-librem
-_srcname=linux-4.18
-pkgver=4.18.9
+_srcname=linux-4.19
+pkgver=4.19.1
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -16,10 +16,10 @@ source=(https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.{xz,sign}
         60-${pkgbase}.hook
         90-${pkgbase}.hook
         byd-touchpad.patch)
-sha256sums=('19d8bcf49ef530cd4e364a45b4a22fa70714b70349c8100e7308488e26f1eaf1'
+sha256sums=('0c68f5655528aed4f99dae71a5b259edc93239fa899e2df79c055275c21749a1'
             'SKIP'
-            'd819e109cb892859f9ffbb4987678076e1535b9e60c12b6512d3847da43e528b'
-            'b9c87c98fb65ed11616d3d2caf050ad8e9fbde755ead454014a9882ab4280719'
+            'bc426a43063b0bf5f9bc59be969338e34276e4a0dbbdb50914beae59a28a3fc1'
+            '80b07b96652a73189e115f22dbbcce5f67ad66629b08e8bee999e6ef675e1607'
             '027aae2677a2d9b184ee39142997484020bc5774dbb74c4776f20cb417881ce5'
             '33ff5ceebdc10b5623642d770527d0cac437e45e841c65148e3a3d0f68e52cdf'
             '5c7af03d9b4cade110543ba706bcbd49fc6447726258b4bfec0edff7ca9994d1'
