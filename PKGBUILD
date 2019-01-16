@@ -2,8 +2,8 @@
 # Based on the linux-lts PKGBUILD in core
 
 pkgbase=linux-librem
-_srcname=linux-4.19
-pkgver=4.19.4
+_srcname=linux-4.20
+pkgver=4.20.2
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -16,10 +16,10 @@ source=(https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.{xz,sign}
         60-${pkgbase}.hook
         90-${pkgbase}.hook
         byd-touchpad.patch)
-sha256sums=('0c68f5655528aed4f99dae71a5b259edc93239fa899e2df79c055275c21749a1'
+sha256sums=('ad0823183522e743972382df0aa08fb5ae3077f662b125f1e599b0b2aaa12438'
             'SKIP'
-            'c1f2c29e3a5b9cd0ec7184a5820cd8a4568e67b791373efa12bd28c29616de9b'
-            'c5d7677fc7316e4860976d10fee96671b1451bd074ae5cd00497b6641e4ac750'
+            '5b4fc9453182f74f28cda6e9c59a2b71f61ac862cbe30f67c8d225d72f1fdf10'
+            'fff7efdc2023ffce8fa98f77a6fabfa4754d165b52d0dcf73f2065adc1e1203d'
             '027aae2677a2d9b184ee39142997484020bc5774dbb74c4776f20cb417881ce5'
             '33ff5ceebdc10b5623642d770527d0cac437e45e841c65148e3a3d0f68e52cdf'
             '5c7af03d9b4cade110543ba706bcbd49fc6447726258b4bfec0edff7ca9994d1'
@@ -51,12 +51,10 @@ prepare() {
 
   sed -i '2iexit 0' scripts/depmod.sh
 
-  make prepare
-
   if [ "${MCONF}" != "" ]; then
     make menuconfig
   else
-    yes "" | make config >/dev/null
+    make olddefconfig
   fi
 }
 
