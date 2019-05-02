@@ -1,7 +1,7 @@
 pkgbase = linux-librem
-	pkgver = 4.20.3
+	pkgver = 5.0.7.arch1
 	pkgrel = 1
-	url = https://www.kernel.org/
+	url = https://git.archlinux.org/linux.git/log/?h=v5.0.7-arch1
 	arch = x86_64
 	license = GPL2
 	makedepends = xmlto
@@ -9,35 +9,33 @@ pkgbase = linux-librem
 	makedepends = inetutils
 	makedepends = bc
 	makedepends = libelf
+	makedepends = git
+	makedepends = python-sphinx
+	makedepends = graphviz
 	options = !strip
-	source = https://www.kernel.org/pub/linux/kernel/v4.x/linux-4.20.tar.xz
-	source = https://www.kernel.org/pub/linux/kernel/v4.x/linux-4.20.tar.sign
-	source = https://www.kernel.org/pub/linux/kernel/v4.x/patch-4.20.3.xz
-	source = linux-librem.config
-	source = linux-librem.preset
-	source = linux-librem.install
-	source = 60-linux-librem.hook
-	source = 90-linux-librem.hook
-	source = byd-touchpad.patch
+	source = archlinux-linux::git+https://git.archlinux.org/linux.git?signed#tag=v5.0.7-arch1
+	source = 0001-byd-touchpad.patch
+	source = config
+	source = 60-linux.hook
+	source = 90-linux.hook
+	source = linux.preset
 	validpgpkeys = ABAF11C65A2970B130ABE3C479BE3E4300411886
 	validpgpkeys = 647F28654894E3BD457199BE38DBBDC86092693E
-	sha256sums = ad0823183522e743972382df0aa08fb5ae3077f662b125f1e599b0b2aaa12438
+	validpgpkeys = 8218F88849AAC522E94CF470A5E9288C4FA415FA
 	sha256sums = SKIP
-	sha256sums = b0ad35e03bb580923bcae60b7041e3e52f1cc42dfd702b1c843a32f8ef851a6c
-	sha256sums = 1cf524ff44565b3ce59714200ccaf4ea7c13f76a9918fc8395ba144bc00e838f
-	sha256sums = 027aae2677a2d9b184ee39142997484020bc5774dbb74c4776f20cb417881ce5
-	sha256sums = 33ff5ceebdc10b5623642d770527d0cac437e45e841c65148e3a3d0f68e52cdf
-	sha256sums = 5c7af03d9b4cade110543ba706bcbd49fc6447726258b4bfec0edff7ca9994d1
-	sha256sums = 75f99f5239e03238f88d1a834c50043ec32b1dc568f2cc291b07d04718483919
 	sha256sums = 6310a88c7027eeeb69082fde85665d10cceaa4b225795337ad55243a8778ec6b
+	sha256sums = 8a78a34f48834bdd99b6c1b53a7466e28e1cc0fb3ab295ad606329d1bf4eec08
+	sha256sums = ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21
+	sha256sums = c043f3033bb781e2688794a59f6d1f7ed49ef9b13eb77ff9a425df33a244a636
+	sha256sums = ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65
 
 pkgname = linux-librem
-	pkgdesc = The Linux stable kernel and modules for Librem systems
-	install = linux-librem.install
+	pkgdesc = The Linux-librem kernel and modules
+	install = linux.install
 	depends = coreutils
 	depends = linux-firmware
 	depends = kmod
-	depends = mkinitcpio>=0.7
+	depends = mkinitcpio
 	optdepends = crda: to set the correct wireless channels of your country
 	provides = linux
 	backup = etc/mkinitcpio.d/linux-librem.preset
@@ -47,6 +45,6 @@ pkgname = linux-librem-headers
 	provides = linux-headers
 
 pkgname = linux-librem-docs
-	pkgdesc = Kernel hackers manual - HTML documentation that comes with the Linux LTS kernel for Librem systems
+	pkgdesc = Kernel hackers manual - HTML documentation that comes with the Linux-librem kernel
 	provides = linux-docs
 

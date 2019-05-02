@@ -2,5 +2,6 @@
 *.sign
 *.pkg
 *.tar
-src
-pkg
+/src
+/pkg
+/archlinux-linux
