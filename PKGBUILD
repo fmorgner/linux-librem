@@ -4,7 +4,7 @@
 # Maintainer: Felix Morgner <felix.morgner@gmail.com>
 
 pkgbase=linux-librem
-_srcver=5.0.7-arch1
+_srcver=5.0.10-arch1
 pkgver=${_srcver//-/.}
 pkgrel=1
 arch=(x86_64)
@@ -28,7 +28,7 @@ validpgpkeys=(
 )
 sha256sums=('SKIP'
             '6310a88c7027eeeb69082fde85665d10cceaa4b225795337ad55243a8778ec6b'
-            '8a78a34f48834bdd99b6c1b53a7466e28e1cc0fb3ab295ad606329d1bf4eec08'
+            '8d7139322d8ddeb3efec097110a195472aef91a4b7ced9d6d1a716f0202257c2'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
             'c043f3033bb781e2688794a59f6d1f7ed49ef9b13eb77ff9a425df33a244a636'
             'ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65')
